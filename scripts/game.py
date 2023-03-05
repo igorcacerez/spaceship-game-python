@@ -1,3 +1,4 @@
+import json
 import random
 import pygame
 from scripts.animatebg import AnimateBg
@@ -17,6 +18,9 @@ class Game(Scene):
     def __init__(self):
         super().__init__()
 
+        aux = json.load(open("assets/score.json"))
+        self.record = aux["record"]
+
         self.bg = AnimateBg("assets/menu/bg.png", [self.all_sprites])
         self.spaceship = SpaceShip("assets/nave/nave1.png", [600, 600], [self.all_sprites])
         
@@ -32,6 +36,9 @@ class Game(Scene):
         self.pontos = 0
         self.text_pontos = Text("assets/fonts/airstrike.ttf", 25, "Pontos: ", "white", [30, 30])
         self.text_pontos_num = Text("assets/fonts/airstrike.ttf", 25, str(self.pontos), "white", [150, 30])
+        
+        self.text_record = Text("assets/fonts/airstrike.ttf", 25, "Record: ", "white", [WIDTH - 220, 30])
+        self.text_record_num = Text("assets/fonts/airstrike.ttf", 25, str(self.record), "white", [WIDTH - 100, 30])
         
         self.music = pygame.mixer.Sound("assets/sounds/bg.ogg")
         self.music.play(-1)
@@ -98,11 +105,15 @@ class Game(Scene):
                 self.spaceship.level += 1
                 sound = pygame.mixer.Sound("assets/sounds/levelup.ogg")
                 sound.play()
+                self.pontos += 10
                 if self.spaceship.level > 7 and self.spaceship.life < 3:
                     self.spaceship.life += 1
     
     def game_over(self):
         if self.spaceship.life <= 0:
+            if self.pontos > self.record:
+                aux = {"record": self.pontos}
+                json.dump(aux, open("assets/score.json", "w"))
             self.music.stop()
             self.active = False
         
@@ -115,6 +126,8 @@ class Game(Scene):
         self.spaw_enemy()
         self.text_pontos.draw()
         self.text_pontos_num.draw()
+        self.text_record.draw()
+        self.text_record_num.draw()
         self.game_over()
         self.hub()
         return super().update()
