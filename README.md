@@ -9,4 +9,4 @@ Tendo o python instalado em seu computado, basta rodar o seguinte comando  **pyt
 
 ## Demonstração
 
-![imagem1](https://github.com/igorcacerez/spaceship-game-python/blob/space.gif?raw=true)
+![imagem1](https://raw.githubusercontent.com/igorcacerez/spaceship-game-python/main/space.gif)
