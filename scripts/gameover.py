@@ -11,7 +11,7 @@ class GameOver(Scene):
         super().__init__()
         
         self.bg = AnimateBg("assets/menu/bg.png", [self.all_sprites])
-        self.title = Text("assets/fonts/airstrike.ttf", 50, "Se Fudeu", "white", [501, 350])
+        self.title = Text("assets/fonts/airstrike.ttf", 50, "GAME OVER", "white", [501, 350])
        
     def events(self, event):
         if event.type == pygame.KEYDOWN:
